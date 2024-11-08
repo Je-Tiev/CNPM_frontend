@@ -29,5 +29,9 @@ export class UserService {
       "/user/login", data, {
         headers:new HttpHeaders().set('Content-Type', 'application/json')
       })
-  }  
+  } 
+  
+  checkToken(){
+    return this.httpClient.get(this.url+"/user/checkToken");
+  }
 }

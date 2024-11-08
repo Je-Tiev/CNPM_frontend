@@ -1,6 +1,9 @@
 export class GlobalConstants{
+
     // Message
-    public static genericError: string = "Something went wrong.";
+    public static genericError: string = "Something went wrong. Please try again later";
+
+    public static unauthroized:string = "You are not authroized person to access thí page.";
 
     // Regex
     public static nameRegex: string = "[a-zA-Z0-9 ]*";
