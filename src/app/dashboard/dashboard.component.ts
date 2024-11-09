@@ -11,32 +11,32 @@ import { GlobalConstants } from '../shared/global-constans';
 })
 export class DashboardComponent implements AfterViewInit {
 
-	responseMessage:any;
-	data:any;
+	responseMessage: any;
+	data: any;
 
 	ngAfterViewInit() { }
 
-	constructor(private dashboardService:DashboardService,
-		private ngxService:NgxUiLoaderService,
-		private snackbarService:SnackbarService) {
-			this.ngxService.start();
-			this.dashboardData();
+	constructor(private dashboardService: DashboardService,
+		private ngxService: NgxUiLoaderService,
+		private snackbarService: SnackbarService) {
+		this.ngxService.start();
+		this.dashboardData();
 	}
 
-	dashboardData(){
-		this.dashboardService.getDetails().subscribe((response:any)=>{
+	dashboardData() {
+		this.dashboardService.getDetails().subscribe((response: any) => {
 			this.ngxService.stop();
 			this.data = response;
-		},(error:any)=>{
+		}, (error: any) => {
 			this.ngxService.stop();
 			console.log(error);
-			if(error.error?.message){
+			if (error.error?.message) {
 				this.responseMessage = error.error?.message;
 			}
-			else{
+			else {
 				this.responseMessage = GlobalConstants.genericError;
 			}
-			this.snackbarService.openSnackBar(this.responseMessage,GlobalConstants.error);
+			this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
 		})
 	}
 }
