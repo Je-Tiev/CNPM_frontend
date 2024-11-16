@@ -39,9 +39,9 @@ export class ManageProductComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response);
     }, (error: any) => {
       this.ngxService.stop();
-      console.log(error.error?.massage);
-      if (error.error?.massage) {
-        this.responseMessage = error.error?.massage;
+      console.log(error.error?.message);
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;
@@ -88,10 +88,10 @@ export class ManageProductComponent implements OnInit {
     });
    }
 
-  handleDeleteAction(values: any) { 
+  handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message: 'delete' + values.name + "product",
+      message: 'delete ' + values.name,
       confirmation: true
     };
     const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
@@ -106,13 +106,13 @@ export class ManageProductComponent implements OnInit {
     this.productService.delete(id).subscribe((response: any) => {
       this.ngxService.stop();
       this.tableData();
-      this.responseMessage = response?.massage;
+      this.responseMessage = response?.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
-      if (error.error?.massage) {
-        this.responseMessage = error.error?.massage;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;
@@ -129,13 +129,13 @@ export class ManageProductComponent implements OnInit {
     }
     this.productService.updateStatus(data).subscribe((response: any) => {
       this.ngxService.stop();
-      this.responseMessage = response?.massage;
+      this.responseMessage = response?.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
-      if (error.error?.massage) {
-        this.responseMessage = error.error?.massage;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;

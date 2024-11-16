@@ -16,7 +16,7 @@ import { GlobalConstants } from 'src/app/shared/global-constans';
 export class ManageOrderComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
-  dataSource: any;
+  dataSource: any = [];
   manageOrderForm: any = FormGroup;
   categories: any = [];
   products: any = [];
@@ -55,8 +55,8 @@ export class ManageOrderComponent implements OnInit {
     }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
-      if (error.error.status === GlobalConstants.error) {
-        this.responseMessage = error.error.message;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;
@@ -73,8 +73,8 @@ export class ManageOrderComponent implements OnInit {
       this.manageOrderForm.controls['total'].setValue(0);
     }, (error: any) => {
       console.log(error);
-      if (error.error.status === GlobalConstants.error) {
-        this.responseMessage = error.error.message;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;
@@ -91,8 +91,8 @@ export class ManageOrderComponent implements OnInit {
       this.manageOrderForm.controls['total'].setValue(this.price * 1);
     }, (error: any) => {
       console.log(error);
-      if (error.error.status === GlobalConstants.error) {
-        this.responseMessage = error.error.message;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;
@@ -180,8 +180,8 @@ export class ManageOrderComponent implements OnInit {
     }, (error: any) => {
       console.log(error);
       this.ngxService.stop();
-      if (error.error.status === GlobalConstants.error) {
-        this.responseMessage = error.error.message;
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
       }
       else {
         this.responseMessage = GlobalConstants.genericError;

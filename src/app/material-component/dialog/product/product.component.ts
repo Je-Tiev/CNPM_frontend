@@ -79,7 +79,7 @@ export class ProductComponent implements OnInit {
     this.productService.add(data).subscribe((response: any) => {
       this.dialogRef.close();
       this.onAddProduct.emit();
-      this.responseMessage = response.massage;
+      this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error) => {
       console.log(error);

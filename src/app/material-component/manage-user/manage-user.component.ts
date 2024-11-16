@@ -12,61 +12,61 @@ import { GlobalConstants } from 'src/app/shared/global-constans';
 })
 export class ManageUserComponent implements OnInit {
 
-  displayedColumns:string[] = ['name','email','contactNumber','status'];
-  dataSource:any;
-  responseMessage:any;
-  constructor(private ngxService:NgxUiLoaderService,
-    private userService:UserService,
-    private snackbarService:SnackbarService) { }
+  displayedColumns: string[] = ['name', 'email', 'contactNumber', 'status'];
+  dataSource: any;
+  responseMessage: any;
+  constructor(private ngxService: NgxUiLoaderService,
+    private userService: UserService,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit(): void {
     this.ngxService.start();
     this.tableData();
   }
 
-  tableData(){
-    this.userService.getUsers().subscribe((response:any)=>{
+  tableData() {
+    this.userService.getUsers().subscribe((response: any) => {
       this.ngxService.stop();
       this.dataSource = new MatTableDataSource(response);
-    },(error:any)=>{
+    }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
-      if(error.error?.message){
+      if (error.error?.message) {
         this.responseMessage = error.error?.message;
       }
-      else{
+      else {
         this.responseMessage = GlobalConstants.genericError;
       }
-      this.snackbarService.openSnackBar(this.responseMessage,GlobalConstants.error);
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
     })
   }
 
-  applyFilter(event:Event){
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onChange(status:any,id:any){
+  onChange(status: any, id: any) {
     this.ngxService.start();
     var data = {
       status: status.toString(),
-      id:id 
+      id: id
     }
 
-    this.userService.update(data).subscribe((response:any)=>{
+    this.userService.update(data).subscribe((response: any) => {
       this.ngxService.stop();
       this.responseMessage = response?.message;
-      this.snackbarService.openSnackBar(this.responseMessage,"success");
-    },(error:any)=>{
+      this.snackbarService.openSnackBar(this.responseMessage, "success");
+    }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
-      if(error.error?.message){
+      if (error.error?.message) {
         this.responseMessage = error.error?.message;
       }
-      else{
+      else {
         this.responseMessage = GlobalConstants.genericError;
       }
-      this.snackbarService.openSnackBar(this.responseMessage,GlobalConstants.error);
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
     })
   }
 }
