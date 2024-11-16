@@ -39,18 +39,6 @@ export class LoginComponent implements OnInit {
       email: formData.email,
       password: formData.password,
     }
-    if (formData.email == "admin@email.com") {
-      this.dialogRef.close();
-      localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiYWRtaW4ifQ.btr1Nqzpj_nmbK2WNfLQllm50oicnZPBM-8eYROJpZk');
-      this.router.navigate(['/cafe/dashboard']);
-      return;
-    }
-    if (formData.email == "user@email.com") {
-      this.dialogRef.close();
-      localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciJ9.b8PNCnCHwtywDnr3Z7iOnpdc-aMXQNz9NT1Cl6W9xe0');
-      this.router.navigate(['/cafe/dashboard']);
-      return;
-    }
     this.userService.login(data).subscribe((response: any) => {
       this.ngxService.stop();
       this.dialogRef.close();
