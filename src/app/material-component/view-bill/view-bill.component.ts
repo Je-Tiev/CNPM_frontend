@@ -9,6 +9,7 @@ import { GlobalConstants } from 'src/app/shared/global-constans';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
 import { error } from 'console';
 import { saveAs } from 'file-saver';
+import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
 
 @Component({
   selector: 'app-view-bill',
@@ -60,7 +61,7 @@ export class ViewBillComponent implements OnInit {
       data: values
     }
     dialogConfig.width = "100%";
-    const dialogRef = this.dialog.open(ViewBillComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ViewBillProductsComponent, dialogConfig);
     this.router.events.subscribe(() => {
       dialogRef.close();
     })
