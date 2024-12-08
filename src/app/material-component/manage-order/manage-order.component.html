@@ -51,6 +51,15 @@
                         <span *ngIf="manageOrderForm.controls.paymentMethod.errors.required">This is required</span>
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex>
+                    <mat-label>Shop</mat-label>
+                    <mat-select formControlName="shop">
+                        <mat-option *ngFor="let shop of shops" [value]="shop">
+                            {{shop.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </div>
     </form>

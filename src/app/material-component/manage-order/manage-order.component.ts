@@ -5,6 +5,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { BillService } from 'src/app/services/bill.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { ShopService } from 'src/app/services/shop.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constans';
 
@@ -18,6 +19,7 @@ export class ManageOrderComponent implements OnInit {
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
   dataSource: any = [];
   manageOrderForm: any = FormGroup;
+  shops: any = [];
   categories: any = [];
   products: any = [];
   price: any;
@@ -25,6 +27,7 @@ export class ManageOrderComponent implements OnInit {
   responseMessage: any;
 
   constructor(private formBuilder: FormBuilder,
+    private shopService: ShopService,
     private categoryService: CategoryService,
     private productService: ProductService,
     private snackbarService: SnackbarService,
@@ -34,17 +37,35 @@ export class ManageOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.start();
+    this.getShops();
     this.getCategories();
     this.manageOrderForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
       contactNumber: [null, [Validators.required, Validators.pattern(GlobalConstants.contactNumberRegex)]],
       paymentMethod: [null, [Validators.required]],
+      shop: [null, [Validators.required]],
       product: [null, [Validators.required]],
       category: [null, [Validators.required]],
       quantity: [null, [Validators.required]],
       price: [null, [Validators.required]],
       total: [0, [Validators.required]]
+    });
+  }
+
+  getShops() {
+    this.shopService.getShops().subscribe((response: any) => {
+      this.shops = response;
+    }, (error: any) => {
+      this.ngxService.stop();
+      console.log(error);
+      if (error.error?.message) {
+        this.responseMessage = error.error?.message;
+      }
+      else {
+        this.responseMessage = GlobalConstants.genericError;
+      }
+      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
     });
   }
 
@@ -167,6 +188,7 @@ export class ManageOrderComponent implements OnInit {
       email: formData.email,
       contactNumber: formData.contactNumber,
       paymentMethod: formData.paymentMethod,
+      shopId: formData.shop.id.toString(),
       totalAmount: this.totalAmount.toString(),
       productDetails: JSON.stringify(this.dataSource)
     }
