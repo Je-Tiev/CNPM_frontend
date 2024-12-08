@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { BillService } from 'src/app/services/bill.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constans';
-import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
-import { error } from 'console';
+import { ConfirmationComponent } from '../confirmation/confirmation.component';
 import { saveAs } from 'file-saver';
-import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
+import { ViewBillProductsComponent } from '../view-bill-products/view-bill-products.component';
+import { ShopService } from 'src/app/services/shop.service';
 
 @Component({
   selector: 'app-view-bill',
@@ -18,11 +18,15 @@ import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bil
 })
 export class ViewBillComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'email', 'contactNumber', 'paymentMethod', 'total', 'view'];
+  displayedColumns: string[] = ['name', 'paymentMethod', 'total', 'view'];
   dataSource: any;
+  total: any;
   responseMessage: any;
+  shopId: any;
 
-  constructor(private billService: BillService,
+  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
+    private shopService: ShopService,
+    private billService: BillService,
     private ngxService: NgxUiLoaderService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -30,13 +34,15 @@ export class ViewBillComponent implements OnInit {
 
   ngOnInit(): void {
     this.ngxService.start();
+    this.shopId = this.dialogData.data;
     this.tableData();
   }
 
   tableData() {
-    this.billService.getBills().subscribe((response: any) => {
+    this.shopService.getShopBills(this.shopId).subscribe((response: any) => {
       this.ngxService.stop();
-      this.dataSource = new MatTableDataSource(response);
+      this.total = response.total;
+      this.dataSource = new MatTableDataSource(response.bills);
     }, (error: any) => {
       this.ngxService.stop();
       console.log(error);
@@ -104,12 +110,9 @@ export class ViewBillComponent implements OnInit {
     this.ngxService.start();
     var data = {
       name: values.name,
-      email: values.email,
       uuid: values.uuid,
-      contactNumber: values.contactNumber,
       paymentMethod: values.paymentMethod,
       totalAmount: values.total.toString(),
-      productDetails: values.productDetail
     }
     this.downloadFile(values.uuid, data);
   }

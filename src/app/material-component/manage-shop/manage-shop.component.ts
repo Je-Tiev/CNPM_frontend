@@ -9,6 +9,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constans';
 import { ShopComponent } from '../dialog/shop/shop.component';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
+import { ViewBillComponent } from '../dialog/view-bill/view-bill.component';
 
 @Component({
   selector: 'app-manage-shop',
@@ -53,6 +54,19 @@ export class ManageShopComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  handleViewBillsAction(values: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'View Bills',
+      data: values.id
+    };
+    dialogConfig.width = "850px";
+    const dialogRef = this.dialog.open(ViewBillComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+    });
   }
 
   handleAddAction() {

@@ -32,6 +32,9 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element" class="action-link">
+                <button mat-icon-button color="primary" matTooltip="View bills" (click)="handleViewBillsAction(element)">
+                    <mat-icon>backup_table</mat-icon>
+                </button>
                 <button mat-icon-button color="primary" matTooltip="Edit" (click)="handleEditAction(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
