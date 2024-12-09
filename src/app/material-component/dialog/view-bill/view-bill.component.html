@@ -1,6 +1,18 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>View bills</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<hr>
 <mat-card>
-    <b><span>View Bill</span></b>
+    <b><span>Total: {{total}}</span></b>
 </mat-card>
+
 <hr>
 <mat-card>
     <mat-form-field appearance="standard">
@@ -8,8 +20,8 @@
         <input matInput (keyup)="applyFilter($event)" #input>
     </mat-form-field>
 </mat-card>
-<hr>
 
+<hr>
 <div class="responsive_table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

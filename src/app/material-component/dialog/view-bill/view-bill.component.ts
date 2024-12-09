@@ -41,7 +41,7 @@ export class ViewBillComponent implements OnInit {
   tableData() {
     this.shopService.getShopBills(this.shopId).subscribe((response: any) => {
       this.ngxService.stop();
-      this.total = response.total;
+      this.total = response.totalAmount;
       this.dataSource = new MatTableDataSource(response.bills);
     }, (error: any) => {
       this.ngxService.stop();
