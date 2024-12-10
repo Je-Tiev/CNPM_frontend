@@ -84,7 +84,7 @@ export class ShopComponent implements OnInit {
     this.shopService.update(data).subscribe((response: any) => {
       this.dialogRef.close();
       this.onEditShop.emit();
-      this.responseMessage = response.massage;
+      this.responseMessage = response.message;
       this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error) => {
       console.log(error);

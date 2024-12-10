@@ -20,7 +20,7 @@ export class ShopService {
 
   update(data: any) {
     return this.httpClient.post(this.url +
-      '/shop/update', data, {
+      '/shop/updateShop/' + data.id, data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     });
   }
